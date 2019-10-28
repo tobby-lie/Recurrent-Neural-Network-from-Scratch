@@ -348,7 +348,7 @@ model = RNNVanilla(vocabulary_size)
 np.random.seed(10)
 # Train on a small subset of the data to see what happens
 model = RNNVanilla(vocabulary_size)
-losses = train_with_sgd(model, XTrain[:1000], YTrain[:1000], nepoch=10, evaluate_loss_after=1)
+losses = train_with_sgd(model, XTrain[:100], YTrain[:100], nepoch=10, evaluate_loss_after=1)
 
 for loss in losses:
     print(loss)
@@ -377,4 +377,24 @@ for i in range(num_sentences):
     # We want long sentences, not sentences with one or two words
     while len(sent) < senten_min_length:
         sent = generate_sentence(model)
+    print ("Sentence # %d of length %d" % ((i+1),  len(sent)))
     print (" ".join(sent))
+
+import matplotlib.pyplot as plt
+
+x_plt = []
+y_plt = []
+
+epoch_ct = 0
+for loss in losses:
+  x_plt.append(epoch_ct)
+  y_plt.append(loss[1])
+  epoch_ct += 1
+
+plt.plot(x_plt, y_plt)
+plt.title('Loss vs. Epoch')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.show()
+
+(x)
